@@ -1,1 +1,1 @@
-teste
+Este é um simples jogo Snake que estou fazendo usando a linguagem C. Ele será em formato ASCII.
