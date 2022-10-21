@@ -113,8 +113,6 @@ int main(){
         char comando;
         scanf("%c", &comando); 
         mover(comando);
-        
-        
     }while(!terminou);
 
     printf("oi");
