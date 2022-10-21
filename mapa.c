@@ -70,22 +70,26 @@ int ehparede(int x, int y){
 
 void atualizar_posicoes(int destino_x, int destino_y){
 
-    int tamanho_cobra = cobra.tam_calda + 1;
+    int obj_x = destino_x;
+    int obj_y = destino_y;
+
+    int tamanho_cobra = cobra.tam_calda+1;
 
     for(int i = 0; i < tamanho_cobra; i++){
-        int antigo_x = cobra.pos_partes[i].x;
-        int antigo_y = cobra.pos_partes[i].y;
+        int atual_x = cobra.pos_partes[i].x;
+        int atual_y = cobra.pos_partes[i].y;
 
-        cobra.pos_partes[i].x = destino_x;
-        cobra.pos_partes[i].y = destino_y;  
+        cobra.pos_partes[i].x = obj_x;
+        cobra.pos_partes[i].y = obj_y; 
 
-        destino_x = antigo_x;
-        destino_y = antigo_y;        
+        m.mapa[obj_x][obj_y] = cobra.partes[i];
+        m.mapa[atual_x][atual_y] = ESPACO; 
+
+        obj_x = atual_x;
+        obj_y = atual_y;
+         
     }
     
-    PorPartesMapa(cobra.pos_partes[0]);
-    
-
 }
 
 void teste_corpo(int numero_partes){
@@ -100,16 +104,6 @@ void teste_posicoes(int numero_posicoes){
     for(int i=0; i < numero_posicoes; i++){
         printf("[%d]: (%d, %d)\n", i, cobra.pos_partes[i].x, cobra.pos_partes[i].y);
     }
-}
-
-void PorPartesMapa(POSICAO cabeca){
-    
-    int qtd_partes = cobra.tam_calda + 1;
-
-    for(int i = 0; i < qtd_partes; i++){
-        m.mapa[cobra.pos_partes[i].x][cobra.pos_partes[i].y] = cobra.partes[i];
-    }
-
 }
 
 
