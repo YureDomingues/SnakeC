@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <curses.h>
 #include "cobrinha.h"
 #include "mapa.h"
 
@@ -35,7 +36,7 @@ void acabou(int x, int y){
        tem_objeto(CORPO_COBRA, x, y)){
 
         terminou = 1;
-        printf("Foi de comes e bebes x.x\n");
+        printw("Foi de comes e bebes x.x\n");
 
     }
 }
@@ -56,7 +57,6 @@ void spawn_objeto(char objeto){
     }while(!tem_objeto(ESPACO, aleatoria.x, aleatoria.y));
 
     m.mapa[aleatoria.x][aleatoria.y] = objeto;
-
 }
 
 int ehParteCorpo(int parte){
@@ -81,24 +81,9 @@ int comeu(int origem_x, int origem_y, int destino_x, int destino_y){
     return 1;
 }
 
-void colocar_vazio(POSICAO cabeca){
-
-    POSICAO possiveis[4] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
-    for(int i=0; i<4; i++){
-        int pos_valida = !ehparede(cabeca.x + possiveis[i].x, cabeca.y + possiveis[i].y);
-        
-        if(pos_valida){
-            cobra.pos_partes[cobra.tam_calda+1].x = cabeca.x + possiveis[i].x;
-            cobra.pos_partes[cobra.tam_calda+1].y = cabeca.y + possiveis[i].y;
-        }
-
-    }
-}
-
-
-
 int main(){
+
+    initscr();	
 
     ler_mapa();
     spawn_objeto(CABECA_COBRA);
@@ -108,14 +93,15 @@ int main(){
 
     encontrar_no_mapa(CABECA_COBRA, &cobra.pos_partes[0]);
     
-    do{
+    do{	
+        clear();
         imprimirmapa();
-        char comando;
-        scanf("%c", &comando); 
+        char comando = 'z';
+        comando = getch();
         mover(comando);
     }while(!terminou);
 
-    printf("oi");
+    endwin();
     
     liberar_mapa();
     
