@@ -12,22 +12,10 @@ Posicao comidinha;
 int terminou = 0;
 
 void inicializar_partes(void){
-    int todas_partes = 100;
-
     cobra.tam_calda = 0;
-
     cobra.partes[0] = CABECA_COBRA;
-
-    int i;
-
-    for(i=1; i <= todas_partes; i++){
-        cobra.partes[i] = '#';
-    }
-
-    cobra.partes[i] = '\0';
-
+    cobra.partes[1] = '\0';
 }
-
 
 void acabou(int x, int y){
    
