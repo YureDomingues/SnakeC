@@ -5,13 +5,13 @@
 #include "cobrinha.h"
 #include "mapa.h"
 
-MAPA m;
-COBRA cobra;
-POSICAO comidinha;
+Mapa m;
+Cobra cobra;
+Posicao comidinha;
 
 int terminou = 0;
 
-void inicializar_partes(){
+void inicializar_partes(void){
     int todas_partes = 100;
 
     cobra.tam_calda = 0;
@@ -49,7 +49,7 @@ void spawn_objeto(char objeto){
 
     srand(time(NULL));
 
-    POSICAO aleatoria;
+    Posicao aleatoria;
     
     do{
         aleatoria.x = rand()%m.linhas;
@@ -59,7 +59,7 @@ void spawn_objeto(char objeto){
     m.mapa[aleatoria.x][aleatoria.y] = objeto;
 }
 
-int ehParteCorpo(int parte){
+int eh_parte_corpo(int parte){
     if(cobra.partes[parte] == CORPO_COBRA || cobra.partes[parte] == CABECA_COBRA) return 1;
 
     return 0;
@@ -81,7 +81,7 @@ int comeu(int origem_x, int origem_y, int destino_x, int destino_y){
     return 1;
 }
 
-int main(){
+int main(void){
 
     initscr();	
 
@@ -95,7 +95,7 @@ int main(){
     
     do{	
         clear();
-        imprimirmapa();
+        imprimir_mapa();
         char comando = 'z';
         comando = getch();
         mover(comando);

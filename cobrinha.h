@@ -12,21 +12,18 @@
 
 #include "mapa.h"
 
-typedef struct cobrinha{
+typedef struct Cobra{
     char partes[100+1];
     POSICAO pos_partes[100];
     int tam_calda;
-}COBRA;
+}Cobra;
 
-
-void inicializar_partes();
-void acabou();
+void inicializar_partes(void);
+void acabou(int x, int y);
 int direcao_valida(char direcao);
 void spawn_objeto(char objeto);
 int comeu(int origem_x, int origem_y, int destino_x, int destino_y);
 void cresce_cobra(int x, int y);
 int ParteCorpo(int parte);
-
-
 
 #endif

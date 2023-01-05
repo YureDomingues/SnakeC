@@ -5,30 +5,30 @@
 #define PAREDE_VERTICAL '|'
 #define ESPACO '.'
 
-typedef struct{
+typedef struct Posicao{
     int x;
     int y;
-}POSICAO;
+}Posicao;
 
-typedef struct{
+typedef struct Mapa{
     char** mapa;
     int linhas;
     int colunas;
-}MAPA;
+}Mapa;
 
 
-void ler_mapa();
-void imprimirmapa();
-void imprimirmapa();
-void alocar_mapa();
-void liberar_mapa();
-void encontrar_no_mapa(char objeto, POSICAO *coordenadas);
+void ler_mapa(void);
+void imprimir_mapa(void);
+void imprimir_mapa(void);
+void alocar_mapa(void);
+void liberar_mapa(void);
+void encontrar_no_mapa(char objeto, Posicao *coordenadas);
 int tem_objeto(char objeto, int x, int y);
 void mover(char direcao);
-void PorPartesMapa(POSICAO cabeca);
+void PorPartesMapa(Posicao cabeca);
 void teste_posicoes(int numero_posicoes);
 void teste_corpo(int numero_posicoes);
 void posicao_comidinha();
-int ehparede(int x, int y);
+int eh_parede(int x, int y);
 
 #endif

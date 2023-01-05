@@ -1,22 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <curses.h>
 #include "mapa.h"
 #include "cobrinha.h"
 
-extern MAPA m;
-extern COBRA cobra;
-extern POSICAO comidinha;
+extern Mapa m;
+extern Cobra cobra;
+extern Posicao comidinha;
 extern int terminou;
 
-void imprimirmapa(){
+void imprimir_mapa(void){
     for(int i=0; i< m.linhas; i++){
-        printw("%s\n", m.mapa[i]);
+        printf("%s\n", m.mapa[i]);
     }
 
 }
 
-void alocar_mapa(){
+void alocar_mapa(void){
 
     m.mapa = malloc(sizeof(char*) * m.linhas);
 
@@ -26,7 +25,7 @@ void alocar_mapa(){
 
 }
 
-void liberar_mapa(){
+void liberar_mapa(void){
     for(int i=0; i < m.linhas; i++){
         free(m.mapa[i]);
     }
@@ -34,7 +33,7 @@ void liberar_mapa(){
     free(m.mapa);
 }
 
-void ler_mapa(){
+void ler_mapa(void){
     FILE *f;
     f = fopen("mapa.txt", "r");
 
@@ -54,7 +53,7 @@ void ler_mapa(){
     fclose(f);
 }
 
-void encontrar_no_mapa(char objeto, POSICAO *coordenadas){
+void encontrar_no_mapa(char objeto, Posicao *coordenadas){
     for(int i=0; i < m.linhas; i++){
         for(int j=0; j < m.colunas; j++){
             if(m.mapa[i][j] == objeto){
@@ -65,7 +64,7 @@ void encontrar_no_mapa(char objeto, POSICAO *coordenadas){
     }
 }
 
-int ehparede(int x, int y){
+int eh_parede(int x, int y){
     return (m.mapa[x][y] == PAREDE_HORIZONTAL || m.mapa[x][y] == PAREDE_VERTICAL);
 }
 
@@ -92,6 +91,21 @@ void atualizar_posicoes(int destino_x, int destino_y){
     }
     
 }
+
+void teste_corpo(int numero_partes){
+    printf("Partes Corpo:\n");
+    for(int i=0; i < numero_partes; i++){
+        printf("[%d] = %c\n", i, cobra.partes[i]);
+    }
+}
+
+void teste_posicoes(int numero_posicoes){
+    printf("Posicoes:\n");
+    for(int i=0; i < numero_posicoes; i++){
+        printf("[%d]: (%d, %d)\n", i, cobra.pos_partes[i].x, cobra.pos_partes[i].y);
+    }
+}
+
 
 void mover(char direcao){
 
@@ -129,5 +143,12 @@ void mover(char direcao){
 }
 
 int tem_objeto(char objeto, int x, int y){
-    return m.mapa[x][y] == objeto;
+    if(m.mapa[x][y] == objeto) return 1;
+    return 0;
+}
+
+void posicao_comidinha(void){
+    Posicao comida;
+    encontrar_no_mapa(COMIDINHA, &comida);
+    printf("Comida:\n(x, y) = (%d, %d)\n", comida.x, comida.y);
 }
