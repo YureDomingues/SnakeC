@@ -14,7 +14,7 @@
 
 typedef struct Cobra{
     char partes[100+1];
-    POSICAO pos_partes[100];
+    Posicao pos_partes[100];
     int tam_calda;
 }Cobra;
 
