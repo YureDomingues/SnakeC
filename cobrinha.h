@@ -1,7 +1,7 @@
 #ifndef _COBRINHA_H
 #define _COBRINHA_H
 
-#define CABECA_COBRA 'C'
+#define CABECA_COBRA '@'
 #define CORPO_COBRA 'O'
 #define COMIDINHA 'x'
 
