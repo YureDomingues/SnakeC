@@ -12,16 +12,17 @@ Posicao comidinha;
 int terminou = 0;
 
 void inicializar_partes(void){
-    cobra.tam_calda = 0;
-    cobra.partes[0] = CABECA_COBRA;
-    cobra.partes[1] = '\0';
+    cobra.tam_calda = 1;
+    cobra.partes[0] = CABECA;
+    cobra.partes[1] = CORPO;
+    cobra.partes[2] = '\0';
 }
 
 void acabou(int x, int y){
    
     if(tem_objeto(PAREDE_HORIZONTAL, x, y)||
        tem_objeto(PAREDE_VERTICAL, x, y)||
-       tem_objeto(CORPO_COBRA, x, y)) terminou = 1;
+       tem_objeto(CORPO, x, y)) terminou = 1;
     
 }
 
@@ -93,15 +94,21 @@ void spawn_objeto(char objeto){
     Posicao aleatoria;
     
     do{
-        aleatoria.x = rand()%(m.linhas-1)  + 1;
-        aleatoria.y = rand()%(m.colunas-1) +1;
+        if(objeto == CABECA){
+            aleatoria.x = rand()%(m.linhas-1) +1;
+            aleatoria.y = rand()%(m.colunas-1)+1;
+        }else{
+            aleatoria.x = rand()%(m.linhas-1) +1;
+            aleatoria.y = rand()%(m.colunas-1)+1;
+        }
+        
     }while(!tem_objeto(ESPACO, aleatoria.x, aleatoria.y));
 
     m.mapa[aleatoria.x][aleatoria.y] = objeto;
 }
 
 int eh_parte_corpo(int parte){
-    if(cobra.partes[parte] == CORPO_COBRA || cobra.partes[parte] == CABECA_COBRA) return 1;
+    if(cobra.partes[parte] == CORPO || cobra.partes[parte] == CABECA) return 1;
 
     return 0;
 }
@@ -112,7 +119,7 @@ int comeu(int origem_x, int origem_y, int destino_x, int destino_y){
 
     cobra.tam_calda++;
     int ultima_parte = cobra.tam_calda;
-    cobra.partes[ultima_parte] = CORPO_COBRA;
+    cobra.partes[ultima_parte] = CORPO;
     
     spawn_objeto(COMIDINHA);
     
@@ -123,12 +130,10 @@ int main(void){
     WINDOW *tela = initscr();	
 
     ler_mapa();
-    spawn_objeto(CABECA_COBRA);
     spawn_objeto(COMIDINHA);
-
+    spawn_objeto(CABECA);
+    encontrar_no_mapa(CABECA, &cobra.pos_partes[0]);
     inicializar_partes();
-
-    encontrar_no_mapa(CABECA_COBRA, &cobra.pos_partes[0]);
     
     do{	
         clear();

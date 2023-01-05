@@ -1,8 +1,8 @@
 #ifndef _COBRINHA_H
 #define _COBRINHA_H
 
-#define CABECA_COBRA '@'
-#define CORPO_COBRA 'O'
+#define CABECA '@'
+#define CORPO 'O'
 #define COMIDINHA 'x'
 
 #define CIMA 'w'
