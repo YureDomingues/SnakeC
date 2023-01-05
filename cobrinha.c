@@ -45,6 +45,63 @@ int direcao_valida(char direcao){
     return (direcao == CIMA || direcao == BAIXO || direcao == DIREITA || direcao == ESQUERDA);
 }
 
+void atualizar_posicoes(int destino_x, int destino_y){
+
+    int obj_x = destino_x;
+    int obj_y = destino_y;
+
+    int tamanho_cobra = cobra.tam_calda+1;
+
+    for(int i = 0; i < tamanho_cobra; i++){
+        int atual_x = cobra.pos_partes[i].x;
+        int atual_y = cobra.pos_partes[i].y;
+
+        cobra.pos_partes[i].x = obj_x;
+        cobra.pos_partes[i].y = obj_y; 
+
+        m.mapa[obj_x][obj_y] = cobra.partes[i];
+        m.mapa[atual_x][atual_y] = ESPACO; 
+
+        obj_x = atual_x;
+        obj_y = atual_y;
+         
+    }
+    
+}
+
+void mover(char direcao){
+
+    if(!direcao_valida(direcao)) return;
+
+    int old_x = cobra.pos_partes[0].x;
+    int old_y = cobra.pos_partes[0].y;
+    int novo_x = old_x;
+    int novo_y = old_y;
+
+    m.mapa[old_x][old_x] = ESPACO;
+   
+    switch (direcao){
+        case CIMA:
+            novo_x--;
+            break;
+        case BAIXO:
+            novo_x++;
+            break;
+        case ESQUERDA:
+            novo_y--;
+            break;
+        case DIREITA:
+            novo_y++;
+            break;
+            
+    }
+
+    //coloquei essa função antes do mover_cobra para não trocar o caractere que precisa ser verificado em acabou()
+    acabou(novo_x, novo_y);
+    comeu(old_x, old_y, novo_x, novo_y);
+    atualizar_posicoes(novo_x, novo_y);
+}
+
 void spawn_objeto(char objeto){
 
     srand(time(NULL));

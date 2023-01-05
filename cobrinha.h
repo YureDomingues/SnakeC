@@ -23,7 +23,7 @@ void acabou(int x, int y);
 int direcao_valida(char direcao);
 void spawn_objeto(char objeto);
 int comeu(int origem_x, int origem_y, int destino_x, int destino_y);
-void cresce_cobra(int x, int y);
-int ParteCorpo(int parte);
+void atualizar_posicoes(int destino_x, int destino_y);
+void mover(char direcao);
 
 #endif

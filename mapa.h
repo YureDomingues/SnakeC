@@ -24,11 +24,9 @@ void alocar_mapa(void);
 void liberar_mapa(void);
 void encontrar_no_mapa(char objeto, Posicao *coordenadas);
 int tem_objeto(char objeto, int x, int y);
-void mover(char direcao);
-void PorPartesMapa(Posicao cabeca);
-void teste_posicoes(int numero_posicoes);
-void teste_corpo(int numero_posicoes);
 void posicao_comidinha();
 int eh_parede(int x, int y);
+
+
 
 #endif
