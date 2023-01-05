@@ -76,8 +76,7 @@ int comeu(int origem_x, int origem_y, int destino_x, int destino_y){
     int ultima_parte = cobra.tam_calda;
 
     cobra.partes[ultima_parte] = CORPO_COBRA;
-
-
+    
     return 1;
 }
 
