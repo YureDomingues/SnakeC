@@ -21,16 +21,15 @@ void acabou(int x, int y){
    
     if(tem_objeto(PAREDE_HORIZONTAL, x, y)||
        tem_objeto(PAREDE_VERTICAL, x, y)||
-       tem_objeto(CORPO_COBRA, x, y)){
-
-        terminou = 1;
-        printw("Foi de comes e bebes x.x\n");
-
-    }
+       tem_objeto(CORPO_COBRA, x, y)) terminou = 1;
+    
 }
 
 int direcao_valida(char direcao){
-    return (direcao == CIMA || direcao == BAIXO || direcao == DIREITA || direcao == ESQUERDA);
+    return (direcao == CIMA || 
+            direcao == BAIXO || 
+            direcao == DIREITA || 
+            direcao == ESQUERDA);
 }
 
 void atualizar_posicoes(int destino_x, int destino_y){
@@ -52,7 +51,6 @@ void atualizar_posicoes(int destino_x, int destino_y){
 
         obj_x = atual_x;
         obj_y = atual_y;
-         
     }
     
 }
@@ -61,33 +59,31 @@ void mover(char direcao){
 
     if(!direcao_valida(direcao)) return;
 
-    int old_x = cobra.pos_partes[0].x;
-    int old_y = cobra.pos_partes[0].y;
-    int novo_x = old_x;
-    int novo_y = old_y;
-
-    m.mapa[old_x][old_x] = ESPACO;
+    int pos_inicial_x = cobra.pos_partes[0].x; //cabeça da cobra x
+    int pos_inicial_y = cobra.pos_partes[0].y; //cabeça da cobra y
+    int pos_final_x = pos_inicial_x;
+    int pos_final_y = pos_inicial_y;
    
     switch (direcao){
         case CIMA:
-            novo_x--;
+            pos_final_x--;
             break;
         case BAIXO:
-            novo_x++;
+            pos_final_x++;
             break;
         case ESQUERDA:
-            novo_y--;
+            pos_final_y--;
             break;
         case DIREITA:
-            novo_y++;
+            pos_final_y++;
             break;
             
     }
 
-    //coloquei essa função antes do mover_cobra para não trocar o caractere que precisa ser verificado em acabou()
-    acabou(novo_x, novo_y);
-    comeu(old_x, old_y, novo_x, novo_y);
-    atualizar_posicoes(novo_x, novo_y);
+    comeu(pos_inicial_x, pos_inicial_y, pos_final_x, pos_final_y);
+    acabou(pos_final_x, pos_final_y);
+    atualizar_posicoes(pos_final_x, pos_final_y);
+    
 }
 
 void spawn_objeto(char objeto){
@@ -97,8 +93,8 @@ void spawn_objeto(char objeto){
     Posicao aleatoria;
     
     do{
-        aleatoria.x = rand()%m.linhas;
-        aleatoria.y = rand()%m.colunas;
+        aleatoria.x = rand()%(m.linhas-1)  + 1;
+        aleatoria.y = rand()%(m.colunas-1) +1;
     }while(!tem_objeto(ESPACO, aleatoria.x, aleatoria.y));
 
     m.mapa[aleatoria.x][aleatoria.y] = objeto;
@@ -114,20 +110,17 @@ int comeu(int origem_x, int origem_y, int destino_x, int destino_y){
 
     if(!tem_objeto(COMIDINHA, destino_x, destino_y)) return 0;
 
-    spawn_objeto(COMIDINHA);
-
     cobra.tam_calda++;
-
     int ultima_parte = cobra.tam_calda;
-
     cobra.partes[ultima_parte] = CORPO_COBRA;
+    
+    spawn_objeto(COMIDINHA);
     
     return 1;
 }
 
 int main(void){
-
-    initscr();	
+    WINDOW *tela = initscr();	
 
     ler_mapa();
     spawn_objeto(CABECA_COBRA);
