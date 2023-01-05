@@ -10,7 +10,7 @@ extern int terminou;
 
 void imprimir_mapa(void){
     for(int i=0; i< m.linhas; i++){
-        printf("%s\n", m.mapa[i]);
+        printw("%s\n", m.mapa[i]);
     }
 
 }
@@ -38,7 +38,7 @@ void ler_mapa(void){
     f = fopen("mapa.txt", "r");
 
     if(f == NULL){
-        printf("Erro na leitura do arquivo.\n");
+        printw("Erro na leitura do arquivo.\n");
         exit(EXIT_FAILURE);
     }
 
